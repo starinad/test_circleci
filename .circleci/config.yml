@@ -11,10 +11,11 @@ jobs:
       - checkout
       - ruby/install-deps
       - run:
-          name: Which bundler?
-          command: bundle -v
-
-
+          name: fasterer
+          command: fasterer
+      - run:
+          name: rubocop
+          command: rubocop
 #- ruby/bundle-install
 
 # version: 2.1
