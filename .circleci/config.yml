@@ -11,5 +11,5 @@ jobs:
       - checkout
       - ruby/install-deps
       - run:
-        name: Which bundler?
+        name: "Which bundler?"
         command: bundle -v
