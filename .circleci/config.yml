@@ -10,12 +10,37 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - run:
-          name: fasterer
-          command: fasterer
+  rubocop:
+    docker:
+      - image: circleci/ruby:2.7.1
+    executor: ruby/default
+    steps:
+      - checkout
+      - ruby/install-deps
       - run:
           name: rubocop
           command: rubocop
+  fasterer:
+    docker:
+      - image: circleci/ruby:2.7.1
+    executor: ruby/default
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: fasterer
+          command: fasterer
+
+workflows:
+  build_and_lint: # The name of our workflow is "build_and_test"
+    jobs: # The list of jobs we run as part of this workflow.
+      - build # Run build first.
+      - rubocop: # Then run test,
+          requires: # Test requires that build passes for it to run.
+            - build # Finally, run the build job
+      - fasterer: # Then run test,
+          requires: # Test requires that build passes for it to run.
+            - build # Finally, run the build job
 #- ruby/bundle-install
 
 # version: 2.1
