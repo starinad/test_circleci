@@ -6,7 +6,6 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.7.1
-    executor: ruby/default
     steps:
       - checkout
       - restore_cache:
@@ -21,7 +20,6 @@ jobs:
   rubocop:
     docker:
       - image: circleci/ruby:2.7.1
-    executor: ruby/default
     steps:
       - checkout
       - restore_cache:
@@ -33,7 +31,6 @@ jobs:
   fasterer:
     docker:
       - image: circleci/ruby:2.7.1
-    executor: ruby/default
     steps:
       - checkout
       - restore_cache:
