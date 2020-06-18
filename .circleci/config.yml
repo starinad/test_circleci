@@ -4,7 +4,7 @@ orbs:
 
 jobs:
   build:
-    executor: ruby/2.7.1
+    executor: "2.7.1"
     steps:
       - checkout
       - restore_cache:
