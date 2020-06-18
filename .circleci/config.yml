@@ -5,7 +5,8 @@ orbs:
 jobs:
   build:
     executor:
-      - tag: default
+      name: default
+      tag: "2.7.1"
     steps:
       - checkout
       - restore_cache:
