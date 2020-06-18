@@ -9,14 +9,23 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - ruby/install-deps
+      - restore_cache:
+          keys:
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+      - save_cache:
+          key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
   rubocop:
     docker:
       - image: circleci/ruby:2.7.1
     executor: ruby/default
     steps:
       - checkout
-      - ruby/install-deps
+      - restore_cache:
+          keys:
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       - run:
           name: rubocop
           command: rubocop
@@ -26,7 +35,9 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
-      - ruby/install-deps
+      - restore_cache:
+          keys:
+            - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       - run:
           name: fasterer
           command: fasterer
