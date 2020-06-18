@@ -12,7 +12,8 @@ jobs:
       - restore_cache:
           keys:
             - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-      - run: bundle install --path vendor/bundle
+      - run: bundle config set path 'vendor/bundle
+      - run: bundle install
       - save_cache:
           key: v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
@@ -26,9 +27,9 @@ jobs:
       - restore_cache:
           keys:
             - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-      - run:
-          name: rubocop
-          command: rubocop
+      - run: bundle config set path 'vendor/bundle
+      - run: bundle install
+      - run: bundle exec rubocop
   fasterer:
     docker:
       - image: circleci/ruby:2.7.1
@@ -38,9 +39,9 @@ jobs:
       - restore_cache:
           keys:
             - v1-gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-      - run:
-          name: fasterer
-          command: fasterer
+      - run: bundle config set path 'vendor/bundle
+      - run: bundle install
+      - run: bundle exec fasterer
 
 workflows:
   build_and_lint: # The name of our workflow is "build_and_test"
